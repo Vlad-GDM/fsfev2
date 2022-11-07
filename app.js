@@ -4,7 +4,8 @@ const logger = require('morgan');
 const port = 3000;
 express.use(logger('dev'));
 
-app.get('/', (req, res) => { res.send('Hello World!') })
+app.get('/', (req, res) => { res.send('Hello Mom!') })
+
 app.get('/users/:id', (req, res) => {
   res.send('Ai vrut sa accesezi pagina de user cu id-ul ' + req.params.id)
 })
