@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const port = 3000;
-express.use(logger('dev'));
+
+app.use(logger('dev'));
 
 app.get('/', (req, res) => { res.send('Hello Mom!') })
 
