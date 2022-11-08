@@ -51,9 +51,9 @@ wss.on('connection', function connection(ws) {
   });
 
   //Send welcome message on each connection
-  if (ws.readyState === ws.OPEN) {
-    ws.send(JSON.stringify({ type: 'connected', payload: 'Welcome!' }));
-  }
+  // if (ws.readyState === ws.OPEN) {
+  //   ws.send(JSON.stringify({ type: 'connected', payload: 'Welcome!' }));
+  // }
 
   ws.on('close', function close() {
     --cc;
