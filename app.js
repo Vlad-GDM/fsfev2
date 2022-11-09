@@ -18,7 +18,10 @@ app.get('/', (req, res) => {
 });
 
 function handleQuery(query, cb) {
-  if (query.split(" ")[0]) cb(`${query.split(" ")[1]} said: ${query.split(" ")[0]}`);
+  let message = query.split(" ")[0];
+  let username = query.split(" ")[1];
+  let response = `${username} said: ${message}`;
+  if (message) cb(response);
   else cb(`${query.split(" ")[1]} said nothing`);
 }
 
@@ -38,7 +41,7 @@ wss.on('connection', function connection(ws) {
       switch (type) {
         case 'query':
           handleQuery(payload, (response) => {
-            ws.send(JSON.stringify({ type: 'queryResponse', payload: response }));
+            wss.broadcast(JSON.stringify({ type: 'queryResponse', payload: response }));
           });
           return;
         default:
@@ -52,7 +55,8 @@ wss.on('connection', function connection(ws) {
 
   //Send welcome message on each connection
   // if (ws.readyState === ws.OPEN) {
-  //   ws.send(JSON.stringify({ type: 'connected', payload: 'Welcome!' }));
+  //   console.log("Connected!")
+  //   //ws.send(JSON.stringify({ type: 'connected', payload: 'Welcome!' }));
   // }
 
   ws.on('close', function close() {
@@ -86,6 +90,5 @@ wss.broadcast = function broadcast(data) {
     client.send(data);
   });
 };
-
 
 server.listen(port, () => console.log(`App listening on port ${port}!`))
